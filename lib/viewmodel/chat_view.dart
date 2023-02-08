@@ -5,8 +5,15 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Text('채팅 스크린'),
+    return Scaffold(
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          children: const [
+            Text('채팅목록 스크린'),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -8,38 +8,34 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'ai chat',
-      theme: ThemeData(primaryColor: Colors.white),
-      home: DefaultTabController(
-        length: 3,
-        child: Scaffold(
-          appBar: AppBar(
-            title: const Text('ai chat App'),
-          ),
-          body: const TabBarView(
-            children: [
-              Center(child: HomeScreen()),
-              Center(child: ChatScreen()),
-              Center(child: SettingsScreen()),
-            ],
-          ),
-          bottomNavigationBar: const TabBar(
-            tabs: [
-              Tab(
-                icon: Icon(Icons.home),
-                text: 'home',
-              ),
-              Tab(
-                icon: Icon(Icons.chat),
-                text: 'chat',
-              ),
-              Tab(
-                icon: Icon(Icons.settings),
-                text: 'settings',
-              )
-            ],
-          ),
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('AI chat App'),
+        ),
+        body: const TabBarView(
+          children: [
+            Center(child: HomeScreen()),
+            Center(child: ChatScreen()),
+            Center(child: SettingsScreen()),
+          ],
+        ),
+        bottomNavigationBar: const TabBar(
+          tabs: [
+            Tab(
+              icon: Icon(Icons.home),
+              text: 'home',
+            ),
+            Tab(
+              icon: Icon(Icons.chat),
+              text: 'chats',
+            ),
+            Tab(
+              icon: Icon(Icons.settings),
+              text: 'settings',
+            )
+          ],
         ),
       ),
     );

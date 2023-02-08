@@ -51,5 +51,26 @@
     	<string>https</string>
 	    <string>http</string>
   	</array>
+	<!-- 카카오 SDK 초기화 과정에 사용됩니다. -->
+    <key>KakaoAppKey</key>
+    <string>네이티브 앱 키를 입력해주세요.</string>
+    <!-- 카카오 인증을 통한 앱 실행에 사용됩니다. -->
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>kakao0b1acaac136372b78c81a18e037a956a</string>
+            </array>
+        </dict>
+    </array>
+    <!-- 카카오 애플리케이션 실행을 위해 사용됩니다. -->
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+         <string>kakaokompassauth</string>
+         <string>kakaolink</string>
+    </array>
 </dict>
 </plist>
