@@ -111,6 +111,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_lints:
+    dependency: "direct main"
+    description:
+      name: flutter_lints
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -171,35 +178,35 @@ packages:
     source: hosted
     version: "1.4.0"
   kakao_flutter_sdk_friend:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: kakao_flutter_sdk_friend
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.4.0"
   kakao_flutter_sdk_navi:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: kakao_flutter_sdk_navi
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.4.0"
   kakao_flutter_sdk_share:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: kakao_flutter_sdk_share
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.4.0"
   kakao_flutter_sdk_story:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: kakao_flutter_sdk_story
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.4.0"
   kakao_flutter_sdk_talk:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: kakao_flutter_sdk_talk
       url: "https://pub.dartlang.org"
@@ -213,12 +220,19 @@ packages:
     source: hosted
     version: "1.4.0"
   kakao_flutter_sdk_user:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: kakao_flutter_sdk_user
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.4.0"
+  lints:
+    dependency: transitive
+    description:
+      name: lints
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
   matcher:
     dependency: transitive
     description:

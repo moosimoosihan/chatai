@@ -53,7 +53,7 @@
   	</array>
 	<!-- 카카오 SDK 초기화 과정에 사용됩니다. -->
     <key>KakaoAppKey</key>
-    <string>네이티브 앱 키를 입력해주세요.</string>
+    <string>0b1acaac136372b78c81a18e037a956a</string>
     <!-- 카카오 인증을 통한 앱 실행에 사용됩니다. -->
     <key>CFBundleURLTypes</key>
     <array>

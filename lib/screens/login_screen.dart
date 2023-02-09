@@ -7,6 +7,8 @@ import 'main_screen.dart';
 // 로그인 화면
 
 class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +57,7 @@ class LoginScreen extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: ((context) => MainScreen()),
+        builder: ((context) => const MainScreen()),
       ),
     );
   }
