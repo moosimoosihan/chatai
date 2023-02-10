@@ -25,15 +25,15 @@ class MainScreen extends StatelessWidget {
           tabs: [
             Tab(
               icon: Icon(Icons.home),
-              text: 'home',
+              text: 'Chat',
             ),
             Tab(
               icon: Icon(Icons.chat),
-              text: 'chats',
+              text: 'Chats',
             ),
             Tab(
               icon: Icon(Icons.settings),
-              text: 'settings',
+              text: 'Settings',
             )
           ],
         ),
