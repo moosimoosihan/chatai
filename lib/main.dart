@@ -23,7 +23,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'ai chat',
       theme: ThemeData(primaryColor: Colors.white),
-      home: LoginScreen(),
+      home: const LoginScreen(),
     );
   }
 }
