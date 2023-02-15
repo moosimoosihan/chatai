@@ -47,10 +47,6 @@
 		<true/>
 		<key>UIApplicationSupportsIndirectInputEvents</key>
 		<true/>
-		<array>
-			<string>https</string>
-			<string>http</string>
-		</array>
 		<!-- 카카오 SDK 초기화 과정에 사용됩니다. -->
 		<key>KakaoAppKey</key>
 		<string>0b1acaac136372b78c81a18e037a956a</string>
