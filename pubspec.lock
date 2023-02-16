@@ -311,7 +311,7 @@ packages:
     source: hosted
     version: "1.4.0"
   kakao_flutter_sdk_friend:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: kakao_flutter_sdk_friend
       url: "https://pub.dartlang.org"

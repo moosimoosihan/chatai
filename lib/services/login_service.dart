@@ -72,6 +72,7 @@ void loginTokenInfo() async {
         '사용자 정보 요청 성공'
         '\n회원번호: ${user.id}'
         '\n닉네임: ${user.kakaoAccount?.profile?.nickname}',
+        // 해당 아이디와 닉네임을 파이어베이스에 있는 데이터와 비교 분석 후 이미 접속을 1번 이상 한 유저라면 데이터를 가져오고 아니라면 저장한다.
       );
     } catch (error) {
       log('사용자 정보 요청 실패 $error');
