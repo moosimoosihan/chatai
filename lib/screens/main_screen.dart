@@ -1,13 +1,21 @@
+import 'dart:developer';
 import 'package:chatai/viewmodel/chat_view.dart';
 import 'package:chatai/viewmodel/home_view.dart';
 import 'package:chatai/viewmodel/settings_view.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatelessWidget {
-  const MainScreen({super.key});
+  final String id, name;
+  //List<List<String>> chatList;
+  const MainScreen({
+    Key? key,
+    required this.id,
+    required this.name,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    log('id: $id, name: $name');
     return DefaultTabController(
       length: 3,
       child: Scaffold(

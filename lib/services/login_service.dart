@@ -1,66 +1,84 @@
 import 'dart:developer';
+import 'package:chatai/screens/login_screen.dart';
 import 'package:chatai/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 
 // 로그인 연동
-void kakaoLogin(context) async {
+kakaoLogin(context) async {
   if (await AuthApi.instance.hasToken()) {
     try {
       AccessTokenInfo tokenInfo = await UserApi.instance.accessTokenInfo();
-      loginOn(context, tokenInfo);
+      log('토큰 유효성 체크 성공 ${tokenInfo.id} ${tokenInfo.expiresIn}');
+      loginOn(context);
     } catch (error) {
       if (error is KakaoException && error.isInvalidTokenError()) {
         log('토큰 만료 $error');
       } else {
         log('토큰 정보 조회 실패 $error');
       }
-      // 카카오톡 실행 가능 여부 확인
-      // 카카오톡 실행이 가능하면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
-      if (await isKakaoTalkInstalled()) {
-        try {
-          OAuthToken token = await UserApi.instance.loginWithKakaoTalk();
-          loginOn(context, token);
-        } catch (error) {
-          log('카카오톡으로 로그인 실패 $error');
-          // 사용자가 카카오톡 설치 후 디바이스 권한 요청 화면에서 로그인을 취소한 경우,
-          // 의도적인 로그인 취소로 보고 카카오계정으로 로그인 시도 없이 로그인 취소로 처리 (예: 뒤로 가기)
-          if (error is PlatformException && error.code == 'CANCELED') {
-            return;
-          }
-          // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인
-          try {
-            OAuthToken token = await UserApi.instance.loginWithKakaoAccount();
-            loginOn(context, token);
-          } catch (error) {
-            log('카카오계정으로 로그인 실패 $error');
-          }
+      try {
+        // 카카오 계정으로 로그인
+        OAuthToken token = await UserApi.instance.loginWithKakaoAccount();
+        log('로그인 성공 ${token.accessToken}');
+        loginOn(context);
+      } catch (error) {
+        log('로그인 실패 $error');
+      }
+    }
+  } else {
+    // 카카오톡 실행 가능 여부 확인
+    // 카카오톡 실행이 가능하면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
+    if (await isKakaoTalkInstalled()) {
+      try {
+        await UserApi.instance.loginWithKakaoAccount();
+        loginOn(context);
+      } catch (error) {
+        log('카카오톡으로 로그인 실패 $error');
+        // 사용자가 카카오톡 설치 후 디바이스 권한 요청 화면에서 로그인을 취소한 경우,
+        // 의도적인 로그인 취소로 보고 카카오계정으로 로그인 시도 없이 로그인 취소로 처리 (예: 뒤로 가기)
+        if (error is PlatformException && error.code == 'CANCELED') {
+          return;
         }
-      } else {
+        // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인
         try {
-          OAuthToken token = await UserApi.instance.loginWithKakaoAccount();
-          loginOn(context, token);
+          await UserApi.instance.loginWithKakaoAccount();
+          loginOn(context);
         } catch (error) {
           log('카카오계정으로 로그인 실패 $error');
         }
+      }
+    } else {
+      try {
+        await UserApi.instance.loginWithKakaoAccount();
+        loginOn(context);
+      } catch (error) {
+        log('카카오계정으로 로그인 실패 $error');
       }
     }
   }
 }
 
-void loginOn(context, token) {
-  log('카카오톡으로 로그인 성공 ${token.accessToken}');
+loginOn(context) async {
+  User user = await UserApi.instance.me();
+  String id = user.id.toString();
+  String name = user.kakaoAccount?.profile?.nickname ?? '';
+
+  log('카카오톡으로 로그인 성공');
   loginTokenInfo();
   Navigator.push(
     context,
     MaterialPageRoute(
-      builder: ((context) => const MainScreen()),
+      builder: ((context) => MainScreen(
+            id: id,
+            name: name,
+          )),
     ),
   );
 }
 
-void loginTokenInfo() async {
+loginTokenInfo() async {
   try {
     AccessTokenInfo tokenInfo = await UserApi.instance.accessTokenInfo();
     log('토큰 정보 보기 성공'
@@ -79,5 +97,20 @@ void loginTokenInfo() async {
     }
   } catch (error) {
     log('토큰 정보 보기 실패 $error');
+  }
+}
+
+kakaoLogOut(context) async {
+  try {
+    await UserApi.instance.logout();
+    log('로그아웃 성공, SDK에서 토큰 삭제');
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: ((context) => const LoginScreen()),
+      ),
+    );
+  } catch (error) {
+    log('로그아웃 실패, SDK에서 토큰 삭제 $error');
   }
 }

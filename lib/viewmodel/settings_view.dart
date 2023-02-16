@@ -1,3 +1,4 @@
+import 'package:chatai/services/login_service.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -5,8 +6,16 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Text('세팅 스크린'),
+    return Scaffold(
+      body: Center(
+        child: MaterialButton(
+          color: Colors.yellow,
+          onPressed: () {
+            kakaoLogOut(context);
+          },
+          child: const Text('Kakao LogOut'),
+        ),
+      ),
     );
   }
 }
