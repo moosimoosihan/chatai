@@ -1,8 +1,8 @@
+import 'dart:developer';
 import 'package:chatai/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-// ignore: depend_on_referenced_packages
-import 'package:kakao_flutter_sdk_common/kakao_flutter_sdk_common.dart';
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 
 void main() {
   // 웹 환경에서 카카오 로그인을 정상적으로 완료하려면 runApp() 호출 전 아래 메서드 호출 필요
@@ -38,5 +38,5 @@ class App extends StatelessWidget {
 
 void hasykey() async {
   var hasykey = await KakaoSdk.origin;
-  print(hasykey);
+  log(hasykey);
 }

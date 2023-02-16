@@ -13,7 +13,7 @@ class LoginScreen extends StatelessWidget {
         child: MaterialButton(
           color: Colors.yellow,
           onPressed: () async {
-            KakaoLogin(context);
+            kakaoLogin(context);
           },
           child: const Text('Kakao Login'),
         ),
