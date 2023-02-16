@@ -16,6 +16,9 @@ void main() {
     javaScriptAppKey: '5bd2118a462bac58f859d9ceb2c1970e',
   );
 
+  // 카카오 로그인 해시 키 받는 함수
+  hasykey();
+
   FlutterNativeSplash.remove(); // 초기화가 끝나는 시점에 삽입
   runApp(const App());
 }
@@ -31,4 +34,9 @@ class App extends StatelessWidget {
       home: const LoginScreen(),
     );
   }
+}
+
+void hasykey() async {
+  var hasykey = await KakaoSdk.origin;
+  print(hasykey);
 }
