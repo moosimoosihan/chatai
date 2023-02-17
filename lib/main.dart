@@ -1,5 +1,7 @@
 import 'dart:developer';
+import 'package:chatai/firebase_options.dart';
 import 'package:chatai/screens/login_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
@@ -7,6 +9,10 @@ import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 void main() async {
   // 웹 환경에서 카카오 로그인을 정상적으로 완료하려면 runApp() 호출 전 아래 메서드 호출 필요
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  // 파이어베이스 초기화
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
@@ -18,9 +24,6 @@ void main() async {
 
   // 카카오 로그인 해시 키 받는 함수
   hasykey();
-
-  // 파이어베이스 초기화
-  //Firebase.initializeApp();
 
   FlutterNativeSplash.remove(); // 초기화가 끝나는 시점에 삽입
   runApp(const App());

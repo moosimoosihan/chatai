@@ -1,24 +1,36 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../model/chat_model.dart';
 import '../services/chat_api_services.dart';
-import '../widgets/chat_widget.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final Future<List<ChatModel>> chats = ChatApiService.getChats();
+  late Future<List<ChatModel>> chats;
+
+  @override
+  void initState() {
+    super.initState();
+    chats = ChatApiService.getChats();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder(
-        future: chats,
-        builder: (context, snapshot) {
+      body: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('users')
+            .doc('user-id')
+            .collection('chat')
+            .orderBy('timestamp', descending: true)
+            .limit(1)
+            .snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasData) {
             return Column(
               children: [
@@ -30,7 +42,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 // 채팅이 보이는 박스
                 Flexible(
-                  child: makeChat(snapshot),
+                  // 임시
+                  child: ListView(),
+                  //child: makeChat(snapshot),
                 ),
                 // 사용자 채팅 입력 박스
                 Padding(
@@ -52,8 +66,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       // 사용자 채팅 보내기 버튼
                       GestureDetector(
                         onTap: () {
-                          sendMsg(TextEditingController().text);
-                          setState(() {});
+                          setState(() {
+                            sendMsg(TextEditingController().text);
+                          });
                         },
                         child: Container(
                           decoration: BoxDecoration(
@@ -82,6 +97,12 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             );
           }
+          if (snapshot.hasError) {
+            return const Center(child: Text('Something went wrong'));
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
           return const Center(
             child: CircularProgressIndicator(),
           );
@@ -96,22 +117,22 @@ void sendMsg(String text) {
   // api로 채팅 전송
 }
 
-// 채팅이 어떻게 보일지 설정해야 함
-ListView makeChat(AsyncSnapshot<List<ChatModel>> snapshot) {
-  return ListView.separated(
-    scrollDirection: Axis.vertical,
-    itemCount: snapshot.data!.length,
-    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-    itemBuilder: (context, index) {
-      var chat = snapshot.data![index];
-      return Chat(
-        title: chat.title,
-        thumb: chat.thumb,
-        id: chat.id,
-      );
-    },
-    separatorBuilder: (context, index) => const SizedBox(
-      width: 40,
-    ),
-  );
-}
+//채팅이 어떻게 보일지 설정해야 함, 최근 채팅을 불러와야 함 없다면 welcome 화면!
+// ListView makeChat(AsyncSnapshot<QuerySnapshot> snapshot) {
+//   return ListView.separated(
+    // scrollDirection: Axis.vertical,
+    // itemCount: snapshot.data!.size,
+    // padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+    // // itemBuilder: (context, index) {
+    // //   //var chat = snapshot.data![index];
+    // //   // return Chat(
+    // //   //   title: chat.title,
+    // //   //   thumb: chat.thumb,
+    // //   //   id: chat.id,
+    // //   // );
+    // // },
+    // separatorBuilder: (context, index) => const SizedBox(
+    //   width: 40,
+    // ),
+//   );
+// }

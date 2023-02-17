@@ -15,13 +15,6 @@ class FireModel {
     chatList = json['chatList'];
   }
 
-// FireModel.fromSnapShot(DocumentSnapshot<Map<String, dynamic>> snapshot)
-//       : this.fromJson(snapshot.data(),snapshot.reference);
-
-//   FireModel.fromQuerySnapshot(
-//       QueryDocumentSnapshot<Map<String, dynamic>> snapshot)
-//       : this.fromJson(snapshot.data(),snapshot.reference);
-
 // 파이어 베이스로 저장 할때 쓴다.
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
