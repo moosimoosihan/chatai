@@ -8,14 +8,17 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: MaterialButton(
-          color: Colors.yellow,
-          onPressed: () async {
-            kakaoLogin(context);
-          },
-          child: const Text('Kakao Login'),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        body: Center(
+          child: MaterialButton(
+            color: Colors.yellow,
+            onPressed: () async {
+              kakaoLogin(context);
+            },
+            child: const Text('Kakao Login'),
+          ),
         ),
       ),
     );
