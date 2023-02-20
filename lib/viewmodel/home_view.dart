@@ -1,36 +1,57 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../model/chat_model.dart';
 import '../services/chat_api_services.dart';
-import '../widgets/chat_widget.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final String id, name;
+  const HomeScreen({
+    Key? key,
+    required this.id,
+    required this.name,
+  }) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final Future<List<ChatModel>> chats = ChatApiService.getChats();
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+  late Future<List<ChatModel>> chats;
+
+  final TextEditingController sendController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    chats = ChatApiService.getChats();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder(
-        future: chats,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
+      body: StreamBuilder(
+        stream: users.snapshots(),
+        builder: (BuildContext context,
+            AsyncSnapshot<QuerySnapshot> streamsnapshot) {
+          if (streamsnapshot.hasData) {
             return Column(
               children: [
-                //대화 주제
-                Row(
-                  children: const [
-                    Text('홈 스크린'),
-                  ],
-                ),
                 // 채팅이 보이는 박스
                 Flexible(
-                  child: makeChat(snapshot),
+                  child: ListView.builder(
+                    itemCount: streamsnapshot.data!.docs.length,
+                    itemBuilder: (context, index) {
+                      final DocumentSnapshot documentSnapshot =
+                          streamsnapshot.data!.docs[index];
+                      return Card(
+                        child: ListTile(
+                          title: Text(documentSnapshot['name']),
+                          subtitle: Text(documentSnapshot['chats']),
+                        ),
+                      );
+                    },
+                  ),
                 ),
                 // 사용자 채팅 입력 박스
                 Padding(
@@ -39,10 +60,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Flexible(
                         child: TextField(
-                          onSubmitted: (text) {
-                            sendMsg(text);
-                          },
-                          controller: TextEditingController(),
+                          onSubmitted: (text) {},
+                          controller: sendController,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: 'Chat',
@@ -51,9 +70,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       // 사용자 채팅 보내기 버튼
                       GestureDetector(
-                        onTap: () {
-                          sendMsg(TextEditingController().text);
-                          setState(() {});
+                        onTap: () async {
+                          await users.add(
+                            {
+                              'name': widget.name,
+                              'chats': sendController.text,
+                            },
+                          );
+                          sendController.clear();
                         },
                         child: Container(
                           decoration: BoxDecoration(
@@ -82,6 +106,12 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             );
           }
+          if (streamsnapshot.hasError) {
+            return const Center(child: Text('Something went wrong'));
+          }
+          if (streamsnapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
           return const Center(
             child: CircularProgressIndicator(),
           );
@@ -89,29 +119,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-}
-
-void sendMsg(String text) {
-  TextEditingController().clear();
-  // api로 채팅 전송
-}
-
-// 채팅이 어떻게 보일지 설정해야 함
-ListView makeChat(AsyncSnapshot<List<ChatModel>> snapshot) {
-  return ListView.separated(
-    scrollDirection: Axis.vertical,
-    itemCount: snapshot.data!.length,
-    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-    itemBuilder: (context, index) {
-      var chat = snapshot.data![index];
-      return Chat(
-        title: chat.title,
-        thumb: chat.thumb,
-        id: chat.id,
-      );
-    },
-    separatorBuilder: (context, index) => const SizedBox(
-      width: 40,
-    ),
-  );
 }
