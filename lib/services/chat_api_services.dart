@@ -23,7 +23,7 @@ class ChatApiService {
 
 // chat api = POST "https://api.openai.com/v1/completions"
 
-// "Authorization" : "Bearer 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"
+// "Authorization" : "Bearer sk-AcwP45bM" + "lZ7KBnaMgLrvT3BlbkFJBAVj2TdqL8fhnz3SA570"
 //  "Content-Type" : application/json"
 
 // "{

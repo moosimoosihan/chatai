@@ -30,6 +30,13 @@
             {
               "client_id": "896145225303-2tfr03ub9rdupkkd0f5gel75ugssqkgd.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "896145225303-1pqjeqp3n1f9ufiupn423ogdlqa0l3m5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.chatai"
+              }
             }
           ]
         }
@@ -59,6 +66,13 @@
             {
               "client_id": "896145225303-2tfr03ub9rdupkkd0f5gel75ugssqkgd.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "896145225303-1pqjeqp3n1f9ufiupn423ogdlqa0l3m5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.chatai"
+              }
             }
           ]
         }
@@ -88,6 +102,13 @@
             {
               "client_id": "896145225303-2tfr03ub9rdupkkd0f5gel75ugssqkgd.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "896145225303-1pqjeqp3n1f9ufiupn423ogdlqa0l3m5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.chatai"
+              }
             }
           ]
         }
