@@ -20,10 +20,35 @@ class ChatApiService {
   }
 }
 
+class ChatAPIService {
+  Map<String, String> headers = {
+    "Authorization": "하단 auth key 입력 후 테스트 가능",
+    "Content-Type": "application/json"
+  };
+
+  Future<ChatAIResponseModel> getChat(String chat) async {
+    final chatbody = jsonEncode(ChatAISendModel(chat).toJson());
+    final url = Uri.parse('https://api.openai.com/v1/completions');
+    final response = await http.post(url, body: chatbody, headers: headers);
+    if (response.statusCode == 200) {
+      final ChatAIResponseModel md =
+          ChatAIResponseModel.fromJson(jsonDecode(response.body));
+      print(md.choices[0]);
+      Choices cs = Choices.fromJson(md.choices[0]);
+      print(cs.text);
+      return md;
+    } else {
+      print(response.statusCode);
+      print(response.body);
+      throw Error();
+    }
+  }
+}
+
 
 // chat api = POST "https://api.openai.com/v1/completions"
 
-// "Authorization" : "Bearer sk-AcwP45bM" + "lZ7KBnaMgLrvT3BlbkFJBAVj2TdqL8fhnz3SA570"
+// "Authorization" : "Bearer sk-9CBc3EwRB65" + "6CLSPxT6BT3BlbkFJHdG9ZggPWwI3o7xcCZEb"
 //  "Content-Type" : application/json"
 
 // "{
