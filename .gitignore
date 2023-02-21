@@ -46,3 +46,4 @@ app.*.map.json
 .firebaserc
 firebase_options.dart
 database.rules.json
+firebaserc
