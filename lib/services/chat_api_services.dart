@@ -22,7 +22,8 @@ class ChatApiService {
 
 class ChatAPIService {
   Map<String, String> headers = {
-    "Authorization": "하단 auth key 입력 후 테스트 가능",
+    "Authorization":
+        "Bearer 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",
     "Content-Type": "application/json"
   };
 

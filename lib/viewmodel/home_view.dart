@@ -77,6 +77,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               'chats': sendController.text,
                             },
                           );
+                          print(sendController.text);
+                          ChatAPIService().getChat(sendController.text);
                           sendController.clear();
                         },
                         child: Container(
