@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
-///
+/// test
 /// Example:
 /// ```dart
 /// import 'firebase_options.dart';
@@ -70,7 +70,8 @@ class DefaultFirebaseOptions {
     projectId: 'copyui-82583',
     databaseURL: 'https://copyui-82583-default-rtdb.firebaseio.com',
     storageBucket: 'copyui-82583.appspot.com',
-    iosClientId: '896145225303-1pqjeqp3n1f9ufiupn423ogdlqa0l3m5.apps.googleusercontent.com',
+    iosClientId:
+        '896145225303-1pqjeqp3n1f9ufiupn423ogdlqa0l3m5.apps.googleusercontent.com',
     iosBundleId: 'com.example.chatai',
   );
 
@@ -81,7 +82,8 @@ class DefaultFirebaseOptions {
     projectId: 'copyui-82583',
     databaseURL: 'https://copyui-82583-default-rtdb.firebaseio.com',
     storageBucket: 'copyui-82583.appspot.com',
-    iosClientId: '896145225303-1pqjeqp3n1f9ufiupn423ogdlqa0l3m5.apps.googleusercontent.com',
+    iosClientId:
+        '896145225303-1pqjeqp3n1f9ufiupn423ogdlqa0l3m5.apps.googleusercontent.com',
     iosBundleId: 'com.example.chatai',
   );
 }
