@@ -34,7 +34,11 @@ class _MainScreenState extends State<MainScreen> {
               id: widget.id,
               name: widget.name,
             )),
-            const Center(child: ChatScreen()),
+            Center(
+                child: ChatsScreen(
+              id: widget.id,
+              name: widget.name,
+            )),
             const Center(child: SettingsScreen()),
           ],
         ),

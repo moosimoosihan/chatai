@@ -1,3 +1,4 @@
+import 'package:chatai/services/firebase_api_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../model/chat_model.dart';
@@ -16,15 +17,21 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  CollectionReference users = FirebaseFirestore.instance.collection('users');
+  late String docNum;
+  late CollectionReference users;
   late Future<List<ChatModel>> chats;
 
   final TextEditingController sendController = TextEditingController();
+
+  int chatRoomNum = 0;
+  int chatNum = 0;
 
   @override
   void initState() {
     super.initState();
     chats = ChatApiService.getChats();
+    users = FirebaseFirestore.instance.collection(widget.id);
+    docNum = '${widget.id}$chatRoomNum';
   }
 
   @override
@@ -47,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       return Card(
                         child: ListTile(
                           title: Text(documentSnapshot['name']),
-                          subtitle: Text(documentSnapshot['chats']),
+                          subtitle: Text(documentSnapshot['chats'].toString()),
                         ),
                       );
                     },
@@ -70,14 +77,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       // 사용자 채팅 보내기 버튼
                       GestureDetector(
-                        onTap: () async {
-                          await users.add(
-                            {
-                              'name': widget.name,
-                              'chats': sendController.text,
-                            },
-                          );
+                        onTap: () {
+                          FirebaseService().SendMessage(users, docNum, chatNum,
+                              widget.name, sendController.text, 'aiText 대답');
                           sendController.clear();
+                          chatNum++;
                         },
                         child: Container(
                           decoration: BoxDecoration(
