@@ -1,3 +1,4 @@
+import 'package:chatai/services/firebase_api_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,7 @@ class ChatsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    late CollectionReference users = FirebaseFirestore.instance.collection(id);
+    CollectionReference users = FirebaseFirestore.instance.collection(id);
     return Scaffold(
       body: StreamBuilder(
         stream: users.snapshots(),
@@ -31,6 +32,21 @@ class ChatsScreen extends StatelessWidget {
                       child: ListTile(
                         title: Text(documentSnapshot['name']),
                         subtitle: Text(documentSnapshot['chats0'].toString()),
+                        trailing: SizedBox(
+                          width: 100,
+                          child: Row(children: [
+                            IconButton(
+                              onPressed: () {
+                                FirebaseService(
+                                  documentId: documentSnapshot.id,
+                                  id: id,
+                                  name: name,
+                                ).DelChatRoom();
+                              },
+                              icon: const Icon(Icons.delete),
+                            )
+                          ]),
+                        ),
                       ),
                     );
                   },

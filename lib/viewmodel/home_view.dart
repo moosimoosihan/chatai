@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       return Card(
                         child: ListTile(
                           title: Text(documentSnapshot['name']),
-                          subtitle: Text(documentSnapshot['chats'].toString()),
+                          subtitle: Text(documentSnapshot['chats0'].toString()),
                         ),
                       );
                     },
@@ -75,11 +75,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
-                      // 사용자 채팅 보내기 버튼
+                      // 사용자 채팅 보내기 버튼s
                       GestureDetector(
                         onTap: () {
-                          FirebaseService().SendMessage(users, docNum, chatNum,
-                              widget.name, sendController.text, 'aiText 대답');
+                          FirebaseService(
+                            id: widget.id,
+                            documentId: docNum,
+                            name: widget.name,
+                          ).SendMessage(
+                              chatNum, sendController.text, 'aiText 대답');
                           sendController.clear();
                           chatNum++;
                         },
@@ -109,16 +113,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 )
               ],
             );
-          }
-          if (streamsnapshot.hasError) {
+          } else if (streamsnapshot.hasError) {
             return const Center(child: Text('Something went wrong'));
-          }
-          if (streamsnapshot.connectionState == ConnectionState.waiting) {
+          } else {
             return const Center(child: CircularProgressIndicator());
           }
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
         },
       ),
     );
