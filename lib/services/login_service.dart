@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:chatai/screens/login_screen.dart';
 import 'package:chatai/screens/main_screen.dart';
-import 'package:chatai/viewmodel/local_utils/ChattingProvider.dart';
+import 'package:chatai/services/firebase_api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
@@ -72,7 +72,11 @@ loginOn(context) async {
   Navigator.of(context).push(
     MaterialPageRoute(
         builder: ((context) => ChangeNotifierProvider(
-              create: (context) => ChattingProvider(id, name),
+              create: (context) => FirebaseService(
+                id: id,
+                name: name,
+                roomNum: '0',
+              ),
               child: const MainScreen(),
             ))),
   );

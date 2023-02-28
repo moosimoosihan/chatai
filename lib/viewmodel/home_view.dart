@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:chatai/viewmodel/local_utils/ChattingProvider.dart';
+import 'package:chatai/services/firebase_api_service.dart';
 import 'package:chatai/viewmodel/local_widget/chatting_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     sendController = TextEditingController();
-    var p = Provider.of<ChattingProvider>(context, listen: false);
+    var p = Provider.of<FirebaseService>(context, listen: false);
     streamSubscription = p.getSnapshot().listen((event) {
       if (firstLoad) {
         firstLoad = false;
@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var p = Provider.of<ChattingProvider>(context);
+    var p = Provider.of<FirebaseService>(context);
     return Scaffold(
       body: Column(
         children: [
@@ -59,6 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   .toList(),
             ),
           ),
+          // 구분선
           Divider(
             thickness: 1.5,
             height: 1.5,
@@ -91,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     var text = sendController.text;
                     //ChatAPIService().getChat(text);
                     sendController.text = '';
-                    p.send(text, 'aitext test');
+                    p.SendMessage(text, 'aitext test');
                   },
                   child: const Padding(
                     padding: EdgeInsets.fromLTRB(15, 5, 15, 5),

@@ -1,53 +1,55 @@
+import 'package:chatai/model/chat_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
-class FirebaseService {
+class FirebaseService extends ChangeNotifier {
   String id;
   String name;
-  String documentId;
-
+  String roomNum;
+  var chattingList = <ChatModel>[];
+  late CollectionReference firebase = FirebaseFirestore.instance
+      .collection('users')
+      .doc(id)
+      .collection('ChatRoom$roomNum');
   FirebaseService({
     required this.id,
     required this.name,
-    required this.documentId,
+    required this.roomNum,
   });
+
   // 메시지 전송
-  void SendMessage(int chatNum, String userText, String aiText) async {
-    DocumentSnapshot snapshot =
-        await FirebaseFirestore.instance.collection(id).doc(documentId).get();
-    if (snapshot.exists) {
-      await FirebaseFirestore.instance.collection(id).doc(documentId).set({
-        'chats$chatNum': FieldValue.arrayUnion([userText, aiText]),
-        'chatNum': chatNum,
-      });
-    } else {
-      AddChatRoom(userText, aiText);
-    }
+  Future SendMessage(String usertext, String aitext) async {
+    var now = DateTime.now().millisecondsSinceEpoch;
+    await firebase.add(ChatModel(id, name, usertext, aitext, now).toJson());
   }
-
-  // 새로운 채팅방(도큐멘트 생성)
-  void AddChatRoom(String userText, String aiText) async {
-    await FirebaseFirestore.instance.collection(id).doc(documentId).set(
-      {
-        'name': name,
-        'chats0': FieldValue.arrayUnion([userText, aiText]),
-        'chatNum': 0,
-      },
-    );
-  }
-
-  // 채팅방 정보를 가져오기
-  void ChatInfo(String id) {}
 
   // 채팅방 삭제
   void DelChatRoom() async {
-    await FirebaseFirestore.instance.collection(id).doc(documentId).delete();
+    await firebase.doc().delete();
   }
 
-  // 채팅 수정
-  void ReChat(int chatNum, String userText, String aiText) async {
-    await FirebaseFirestore.instance.collection(id).doc(documentId).update({
-      'chat$chatNum': userText,
-      'chats$chatNum': FieldValue.arrayUnion([userText, aiText]),
-    });
+  Stream<QuerySnapshot> getSnapshot() {
+    return firebase
+        .limit(1)
+        .orderBy('uploadTime', descending: true)
+        .snapshots();
+  }
+
+  void addOne(ChatModel model) {
+    chattingList.insert(0, model);
+    notifyListeners();
+  }
+
+  Future load() async {
+    var now = DateTime.now().millisecondsSinceEpoch;
+    final f = FirebaseFirestore.instance;
+    var result = await f
+        .collection(id)
+        .where('uploadTime', isGreaterThan: now)
+        .orderBy('uploadTime', descending: true)
+        .get();
+    var l = result.docs.map((e) => ChatModel.fromJson(e.data())).toList();
+    chattingList.addAll(l);
+    notifyListeners();
   }
 }

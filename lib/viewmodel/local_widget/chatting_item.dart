@@ -1,5 +1,5 @@
 import 'package:chatai/model/chat_model.dart';
-import 'package:chatai/viewmodel/local_utils/ChattingProvider.dart';
+import 'package:chatai/services/firebase_api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,7 +9,7 @@ class ChattingItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var p = Provider.of<ChattingProvider>(context);
+    var p = Provider.of<FirebaseService>(context);
     var isMe = chattingModel.id == p.id;
 
     return Container(
