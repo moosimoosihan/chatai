@@ -7,7 +7,7 @@ class ChatModel {
   final int uploadTime;
 
   factory ChatModel.fromJson(Map<String, dynamic> json) {
-    return ChatModel(json['id'], json['name'], json['text'], json['aitext'],
+    return ChatModel(json['id'], json['name'], json['usertext'], json['aitext'],
         json['uploadTime']);
   }
   Map<String, dynamic> toJson() {

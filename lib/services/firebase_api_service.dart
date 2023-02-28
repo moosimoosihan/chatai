@@ -20,7 +20,10 @@ class FirebaseService extends ChangeNotifier {
   // 메시지 전송
   Future SendMessage(String usertext, String aitext) async {
     var now = DateTime.now().millisecondsSinceEpoch;
-    await firebase.add(ChatModel(id, name, usertext, aitext, now).toJson());
+    await firebase
+        .add(ChatModel(id, name, usertext, aitext, now).toJson())
+        .then((value) => print("Text Added"))
+        .catchError((error) => print("Failed to add user : $error"));
   }
 
   // 채팅방 삭제
