@@ -5,12 +5,9 @@ import 'package:chatai/viewmodel/settings_view.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
-  final String id, name;
   //List<List<String>> chatList;
   const MainScreen({
     Key? key,
-    required this.id,
-    required this.name,
   }) : super(key: key);
 
   @override
@@ -20,26 +17,17 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
-    log('id: ${widget.id}, name: ${widget.name}');
     return DefaultTabController(
       length: 3,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('AI chat App'),
         ),
-        body: TabBarView(
+        body: const TabBarView(
           children: [
-            Center(
-                child: HomeScreen(
-              id: widget.id,
-              name: widget.name,
-            )),
-            Center(
-                child: ChatsScreen(
-              id: widget.id,
-              name: widget.name,
-            )),
-            const Center(child: SettingsScreen()),
+            Center(child: HomeScreen()),
+            Center(child: ChatsScreen()),
+            Center(child: SettingsScreen()),
           ],
         ),
         bottomNavigationBar: const TabBar(

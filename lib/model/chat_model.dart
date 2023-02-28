@@ -1,11 +1,24 @@
 class ChatModel {
-  // chat api 모델에 맞게 다시 변형
-  final String title, thumb, id;
+  ChatModel(this.id, this.name, this.usertext, this.aitext, this.uploadTime);
+  final String id;
+  final String name;
+  final String usertext;
+  final String aitext;
+  final int uploadTime;
 
-  ChatModel.fromJson(Map<String, dynamic> json)
-      : title = json['title'],
-        thumb = json['thumb'],
-        id = json['id'];
+  factory ChatModel.fromJson(Map<String, dynamic> json) {
+    return ChatModel(json['id'], json['name'], json['text'], json['aitext'],
+        json['uploadTime']);
+  }
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'id': id,
+      'name': name,
+      'usertext': usertext,
+      'aitext': aitext,
+      'uploadTime': uploadTime,
+    };
+  }
 }
 
 class ChatAIResponseModel {

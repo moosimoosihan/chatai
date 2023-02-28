@@ -1,9 +1,11 @@
 import 'dart:developer';
 import 'package:chatai/screens/login_screen.dart';
 import 'package:chatai/screens/main_screen.dart';
+import 'package:chatai/viewmodel/local_utils/ChattingProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
+import 'package:provider/provider.dart';
 
 // 로그인 연동
 kakaoLogin(context) async {
@@ -67,14 +69,12 @@ loginOn(context) async {
 
   log('카카오톡으로 로그인 성공');
   loginTokenInfo();
-  Navigator.push(
-    context,
+  Navigator.of(context).push(
     MaterialPageRoute(
-      builder: ((context) => MainScreen(
-            id: id,
-            name: name,
-          )),
-    ),
+        builder: ((context) => ChangeNotifierProvider(
+              create: (context) => ChattingProvider(id, name),
+              child: const MainScreen(),
+            ))),
   );
 }
 
