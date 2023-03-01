@@ -9,6 +9,7 @@ class ChattingItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var dt = DateTime.fromMillisecondsSinceEpoch(chattingModel.uploadTime);
     var p = Provider.of<FirebaseService>(context);
     var isMe = chattingModel.id == p.id;
 
@@ -47,6 +48,10 @@ class ChattingItem extends StatelessWidget {
                     ),
                     Text(
                       chattingModel.aitext,
+                      style: const TextStyle(color: Colors.white, fontSize: 18),
+                    ),
+                    Text(
+                      '[${dt.year}:${dt.month}:${dt.day}] ${dt.hour}:${dt.minute}:${dt.second}',
                       style: const TextStyle(color: Colors.white, fontSize: 18),
                     ),
                   ],

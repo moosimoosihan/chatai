@@ -21,9 +21,15 @@ class FirebaseService extends ChangeNotifier {
   Future SendMessage(String usertext, String aitext) async {
     var now = DateTime.now().millisecondsSinceEpoch;
     await firebase
-        .add(ChatModel(id, name, usertext, aitext, now).toJson())
+        .add(ChatModel(
+          id,
+          name,
+          usertext,
+          aitext,
+          now,
+        ).toJson())
         .then((value) => print("Text Added"))
-        .catchError((error) => print("Failed to add user : $error"));
+        .catchError((error) => print("Failed to add text : $error"));
   }
 
   // 채팅방 삭제
@@ -44,14 +50,10 @@ class FirebaseService extends ChangeNotifier {
   }
 
   Future load() async {
-    var now = DateTime.now().millisecondsSinceEpoch;
-    final f = FirebaseFirestore.instance;
-    var result = await f
-        .collection(id)
-        .where('uploadTime', isGreaterThan: now)
-        .orderBy('uploadTime', descending: true)
-        .get();
-    var l = result.docs.map((e) => ChatModel.fromJson(e.data())).toList();
+    var result = await firebase.orderBy('uploadTime', descending: true).get();
+    var l = result.docs
+        .map((e) => ChatModel.fromJson(e.data() as Map<String, dynamic>))
+        .toList();
     chattingList.addAll(l);
     notifyListeners();
   }
