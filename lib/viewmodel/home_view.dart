@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:chatai/services/firebase_api_service.dart';
-import 'package:chatai/viewmodel/local_widget/chatting_item.dart';
+import 'package:chatai/widgets/chatList_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../model/chat_model.dart';
@@ -55,7 +55,9 @@ class _HomeScreenState extends State<HomeScreen> {
             child: ListView(
               reverse: true,
               children: p.chattingList
-                  .map((e) => ChattingItem(chattingModel: e))
+                  .map((e) => ChattingItem(
+                        chattingModel: e,
+                      ))
                   .toList(),
             ),
           ),
