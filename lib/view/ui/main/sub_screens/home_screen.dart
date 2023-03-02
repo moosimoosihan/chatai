@@ -4,7 +4,7 @@ import 'package:chatai/provider/firebase_api.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../../model/chat_model.dart';
-import '../widgets/chatList_widget.dart';
+import '../../../commonWidgets/chatList_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
