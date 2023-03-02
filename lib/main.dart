@@ -15,7 +15,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
+//
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   // runApp() 호출 전 Flutter SDK 초기화
