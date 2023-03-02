@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:chatai/services/firebase_api_service.dart';
-import 'package:chatai/widgets/chatList_widget.dart';
+import 'package:chatai/provider/firebase_api.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../model/chat_model.dart';
+import '../../../../model/chat_model.dart';
+import '../../../commonWidgets/chatList_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({

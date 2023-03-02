@@ -1,11 +1,9 @@
-import 'dart:developer';
 import 'package:chatai/viewmodel/chat_view.dart';
 import 'package:chatai/viewmodel/home_view.dart';
 import 'package:chatai/viewmodel/settings_view.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
-  //List<List<String>> chatList;
   const MainScreen({
     Key? key,
   }) : super(key: key);
