@@ -1,5 +1,6 @@
+import 'package:chatai/controller/login_controller.dart';
 import 'package:flutter/material.dart';
-import '../../../provider/login_api.dart';
+import 'package:get/get.dart';
 
 // 로그인 화면
 
@@ -15,7 +16,7 @@ class LoginScreen extends StatelessWidget {
           child: MaterialButton(
             color: Colors.yellow,
             onPressed: () async {
-              kakaoLogin(context);
+              Get.find<LoginController>().kakaoLogin(context);
             },
             child: const Text('Kakao Login'),
           ),

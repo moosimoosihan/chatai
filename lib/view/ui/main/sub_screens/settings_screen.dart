@@ -1,5 +1,6 @@
-import 'package:chatai/provider/login_api.dart';
+import 'package:chatai/controller/login_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -11,7 +12,7 @@ class SettingsScreen extends StatelessWidget {
         child: MaterialButton(
           color: Colors.yellow,
           onPressed: () {
-            kakaoLogOut(context);
+            Get.find<LoginController>().kakaoLogout(context);
           },
           child: const Text('Kakao LogOut'),
         ),
