@@ -40,3 +40,41 @@ class ChatAPI {
     }
   }
 }
+
+
+// chat api = POST "https://api.openai.com/v1/completions"
+
+// "Authorization" : "Bearer sk-9CBc3EwRB65" + "6CLSPxT6BT3BlbkFJHdG9ZggPWwI3o7xcCZEb"
+//  "Content-Type" : application/json"
+
+// "{
+//        "model": "text-davinci-003",
+//        "prompt": "The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.\n\nHuman: Hello, who are you?\nAI: I am an AI created by OpenAI. How can I help you today?\nHuman: I'd like to cancel my subscription.\nAI:",
+//        "temperature": 0.9,
+//        "max_tokens": 150,
+//        "top_p": 1,
+//        "frequency_penalty": 0.0,
+//        "presence_penalty": 0.6,
+//        "stop": [" Human:", " AI:"]
+//       }
+// "
+// 
+// {
+//     "id": "cmpl-6k78bYYBst84xUbZCQNL8vcReRzIy",
+//     "object": "text_completion",
+//     "created": 1676448545,
+//     "model": "text-davinci-003",
+//     "choices": [
+//         {
+//             "text": " Certainly, I'd be glad to help you with that. What subscription service are you trying to cancel?",
+//             "index": 0,
+//             "logprobs": null,
+//             "finish_reason": "stop"
+//         }
+//     ],
+//     "usage": {
+//         "prompt_tokens": 66,
+//         "completion_tokens": 21,
+//         "total_tokens": 87
+//     }
+// }
