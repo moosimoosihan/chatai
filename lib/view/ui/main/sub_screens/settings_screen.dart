@@ -1,4 +1,4 @@
-import 'package:chatai/services/login_service.dart';
+import 'package:chatai/provider/login_api.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatelessWidget {

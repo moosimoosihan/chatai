@@ -1,7 +1,8 @@
-import 'package:chatai/viewmodel/chat_view.dart';
-import 'package:chatai/viewmodel/home_view.dart';
-import 'package:chatai/viewmodel/settings_view.dart';
 import 'package:flutter/material.dart';
+
+import 'sub_screens/chat_screen.dart';
+import 'sub_screens/home_screen.dart';
+import 'sub_screens/settings_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({

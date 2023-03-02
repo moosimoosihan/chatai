@@ -1,7 +1,7 @@
 import 'dart:developer';
-import 'package:chatai/screens/login_screen.dart';
-import 'package:chatai/screens/main_screen.dart';
-import 'package:chatai/services/firebase_api_service.dart';
+import 'package:chatai/view/ui/login/login_screen.dart';
+import 'package:chatai/view/ui/main/main_screen.dart';
+import 'package:chatai/provider/firebase_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
