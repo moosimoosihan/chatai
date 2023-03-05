@@ -70,6 +70,7 @@ class LoginApi {
 
     log('카카오톡으로 로그인 성공');
     loginTokenInfo();
+    // Get.toN
     Navigator.of(context).push(
       MaterialPageRoute(
           builder: ((context) => ChangeNotifierProvider(

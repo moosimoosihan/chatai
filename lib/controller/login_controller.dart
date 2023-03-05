@@ -6,15 +6,10 @@ class LoginController extends GetxController {
   LoginController({required this.repository});
 
   kakaoLogin(context) {
-    repository.kakaoLogin(context).then(() {});
+    repository.kakaoLogin(context);
   }
 
   kakaoLogout(context) {
     repository.kakaoLogout(context).then(() {});
   }
-
-  // details(post){
-  //   this.post = post;
-  //   Get.toNamed(Routes.DETAILS);
-  // }
 }

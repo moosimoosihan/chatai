@@ -1,4 +1,4 @@
-import 'package:chatai/provider/login_api.dart';
+import 'package:chatai/provider/kakao_api.dart';
 
 class ExampleRepository {
   final LoginApi apiClient;
