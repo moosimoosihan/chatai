@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../../../model/chat_model.dart';
-import '../../../commonWidgets/chatList_widget.dart';
+import '../widgets/chatList_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
