@@ -10,6 +10,7 @@ class LoginScreen extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
+<<<<<<< HEAD
         body: Center(
           child: MaterialButton(
             color: Colors.yellow,
@@ -19,6 +20,19 @@ class LoginScreen extends StatelessWidget {
             child: const Text('Kakao Login'),
           ),
         ),
+=======
+        body: Center(child: GetBuilder<LoginController>(
+          builder: (_) {
+            return MaterialButton(
+              color: Colors.yellow,
+              onPressed: () async {
+                Get.find<LoginController>().kakaoLogin(context);
+              },
+              child: const Text('Kakao Login'),
+            );
+          },
+        )),
+>>>>>>> dc0fe8b (폴더 구조 변경)
       ),
     );
   }

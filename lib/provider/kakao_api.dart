@@ -80,7 +80,7 @@ class LoginApi {
                 create: (context) => FirebaseService(
                   id: id,
                   name: name,
-                  roomNum: 0,
+                  roomNum: roomNum,
                 ),
                 child: const MainScreen(),
               ))),
