@@ -21,6 +21,9 @@ class ChatModel {
   }
 }
 
+/// ChatAIResponseModel - AI 채팅 API 결과값
+/// Choices - AI 채팅 결과값 Json format
+
 class ChatAIResponseModel {
   final String id;
   final int created;
@@ -41,6 +44,8 @@ class Choices {
         text = json['text'];
 }
 
+/// ChatAISendModel - AI 채팅 API 전달값
+
 class ChatAISendModel {
   final String prompt;
   final String model = "text-davinci-003";
@@ -51,7 +56,6 @@ class ChatAISendModel {
     return {'prompt': prompt, 'model': model, 'max_tokens': 150};
   }
 }
-
 
 // {
 //   "model": "text-davinci-003",
