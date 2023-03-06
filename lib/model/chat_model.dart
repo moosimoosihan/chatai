@@ -5,12 +5,14 @@ class ChatModel {
     this.usertext,
     this.aitext,
     this.uploadTime,
+    this.roomNum,
   );
   final String id;
   final String name;
   final String usertext;
   final String aitext;
   final int uploadTime;
+  final int roomNum;
 
   factory ChatModel.fromJson(Map<String, dynamic> json) {
     return ChatModel(
@@ -19,6 +21,7 @@ class ChatModel {
       json['usertext'],
       json['aitext'],
       json['uploadTime'],
+      json['roomNum'],
     );
   }
   Map<String, dynamic> toJson() {
@@ -28,6 +31,7 @@ class ChatModel {
       'usertext': usertext,
       'aitext': aitext,
       'uploadTime': uploadTime,
+      'roomNum': roomNum,
     };
   }
 }
