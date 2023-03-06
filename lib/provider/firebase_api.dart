@@ -52,6 +52,7 @@ class FirebaseService extends ChangeNotifier {
   }
 
   Future load() async {
+    chattingList = <ChatModel>[];
     var result = await firebase.orderBy('uploadTime', descending: true).get();
     var l = result.docs
         .map((e) => ChatModel.fromJson(e.data() as Map<String, dynamic>))
