@@ -7,9 +7,10 @@ class FirebaseService extends ChangeNotifier {
   String name;
   int roomNum;
   var chattingList = <ChatModel>[];
-  late Stream<List<String>> chatRoomsStream;
-  late DocumentReference firebase =
-      FirebaseFirestore.instance.collection('users').doc(id);
+  late CollectionReference firebase = FirebaseFirestore.instance
+      .collection('users')
+      .doc(id)
+      .collection('ChatRoom');
   FirebaseService({
     required this.id,
     required this.name,
@@ -53,7 +54,7 @@ class FirebaseService extends ChangeNotifier {
 
   Stream<QuerySnapshot> getSnapshot() {
     return firebase
-        .collection("ChatRoom$roomNum")
+        .where('roomNum', isEqualTo: roomNum)
         .orderBy('uploadTime', descending: true)
         .limit(1)
         .snapshots();
@@ -75,36 +76,11 @@ class FirebaseService extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<int> roomCount() async {
-    late int count;
-
-    // 서브컬렉션을 구하는 로직 필요!
-    count = await listenToChatRooms().length;
-
-    print('방 개수: $count');
-    return count;
-  }
-
-  Future<Object> RoomTitle(int index) async {
-    QuerySnapshot r = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(id)
-        .collection('ChatRoom$index')
-        .orderBy('uploadTime', descending: true)
-        .limit(1)
-        .get();
-    String l;
-    if (r.docs.isNotEmpty) {
-      // 데이터가 있을 경우
-      l = r.docs.first.get('usertext');
-    } else {
-      // 데이터가 없을 경우
-      l = '대화가 없습니다.';
-    }
-    return l;
-  }
-
-  Stream<DocumentSnapshot<Object?>> listenToChatRooms() {
-    return FirebaseFirestore.instance.collection('users').doc(id).snapshots();
+  // ignore: non_constant_identifier_names
+  Future RoomCount() async {
+    int count = 0;
+    await firebase.get().then((snapshot) {
+      count = snapshot.docs.length;
+    });
   }
 }
