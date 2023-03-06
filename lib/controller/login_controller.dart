@@ -10,6 +10,6 @@ class LoginController extends GetxController {
   }
 
   kakaoLogout(context) {
-    repository.kakaoLogout(context).then(() {});
+    repository.kakaoLogout(context);
   }
 }
