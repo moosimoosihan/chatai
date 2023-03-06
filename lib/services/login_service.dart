@@ -63,6 +63,9 @@ kakaoLogin(context) async {
 }
 
 loginOn(context) async {
+  // 채팅방 시작 번호
+  int roomNum = 0;
+
   User user = await UserApi.instance.me();
   String id = user.id.toString();
   String name = user.kakaoAccount?.profile?.nickname ?? '';
@@ -75,7 +78,7 @@ loginOn(context) async {
               create: (context) => FirebaseService(
                 id: id,
                 name: name,
-                roomNum: '0',
+                roomNum: roomNum,
               ),
               child: const MainScreen(),
             ))),
