@@ -42,6 +42,7 @@ class FirebaseService extends ChangeNotifier {
     return firebase
         .where('roomNum', isEqualTo: roomNum)
         .orderBy('uploadTime', descending: true)
+        .limit(1)
         .snapshots();
   }
 
