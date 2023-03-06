@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../services/login_service.dart';
+import 'package:get/get.dart';
+import '../../../controller/login_controller.dart';
 
 // 로그인 화면
 
