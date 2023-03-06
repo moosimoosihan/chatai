@@ -27,6 +27,7 @@ class FirebaseService extends ChangeNotifier {
           usertext,
           aitext,
           now,
+          roomNum,
         ).toJson())
         .then((value) => print("Text Added"))
         .catchError((error) => print("Failed to add text : $error"));
