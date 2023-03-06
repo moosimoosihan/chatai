@@ -1,5 +1,6 @@
+import 'package:chatai/controller/login_controller.dart';
 import 'package:flutter/material.dart';
-import '../services/login_service.dart';
+import 'package:get/get.dart';
 
 // 로그인 화면
 
