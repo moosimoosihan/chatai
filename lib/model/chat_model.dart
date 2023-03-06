@@ -26,6 +26,7 @@ class ChatModel {
       json['usertext'],
       json['aitext'],
       json['uploadTime'],
+      json['roomNum'],
     );
   }
   Map<String, dynamic> toJson() {
@@ -35,6 +36,7 @@ class ChatModel {
       'usertext': usertext,
       'aitext': aitext,
       'uploadTime': uploadTime,
+      'roomNum': roomNum,
       'roomNum': roomNum,
     };
   }
