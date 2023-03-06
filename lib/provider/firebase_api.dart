@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 class FirebaseService extends ChangeNotifier {
   String id;
   String name;
-  String roomNum;
+  int roomNum;
   var chattingList = <ChatModel>[];
   late CollectionReference firebase = FirebaseFirestore.instance
       .collection('users')
       .doc(id)
-      .collection('ChatRoom$roomNum');
+      .collection('ChatRoom');
   FirebaseService({
     required this.id,
     required this.name,
@@ -27,6 +27,7 @@ class FirebaseService extends ChangeNotifier {
           usertext,
           aitext,
           now,
+          roomNum,
         ).toJson())
         .then((value) => print("Text Added"))
         .catchError((error) => print("Failed to add text : $error"));
@@ -39,7 +40,7 @@ class FirebaseService extends ChangeNotifier {
 
   Stream<QuerySnapshot> getSnapshot() {
     return firebase
-        .limit(1)
+        .where('roomNum', isEqualTo: roomNum)
         .orderBy('uploadTime', descending: true)
         .snapshots();
   }
@@ -56,5 +57,13 @@ class FirebaseService extends ChangeNotifier {
         .toList();
     chattingList.addAll(l);
     notifyListeners();
+  }
+
+  // ignore: non_constant_identifier_names
+  Future RoomCount() async {
+    int count = 0;
+    await firebase.get().then((snapshot) {
+      count = snapshot.docs.length;
+    });
   }
 }
