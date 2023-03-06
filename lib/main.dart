@@ -1,9 +1,11 @@
 import 'dart:developer';
 import 'package:chatai/firebase_options.dart';
-import 'package:chatai/screens/login_screen.dart';
+import 'package:chatai/routes/app_pages.dart';
+import 'package:chatai/routes/app_routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 
 void main() async {
@@ -11,11 +13,12 @@ void main() async {
 
   // 웹 환경에서 카카오 로그인을 정상적으로 완료하려면 runApp() 호출 전 아래 메서드 호출 필요
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+
   // 파이어베이스 초기화
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
+//
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   // runApp() 호출 전 Flutter SDK 초기화
@@ -28,20 +31,12 @@ void main() async {
   hasykey();
 
   FlutterNativeSplash.remove(); // 초기화가 끝나는 시점에 삽입
-  runApp(const App());
-}
-
-class App extends StatelessWidget {
-  const App({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'ai chat',
-      theme: ThemeData(primaryColor: Colors.white),
-      home: const LoginScreen(),
-    );
-  }
+  runApp(GetMaterialApp(
+    title: 'ai chat',
+    theme: ThemeData(primaryColor: Colors.white),
+    getPages: AppPages.pages,
+    initialRoute: Routes.LOGIN,
+  ));
 }
 
 void hasykey() async {
