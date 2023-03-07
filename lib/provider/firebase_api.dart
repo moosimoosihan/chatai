@@ -7,6 +7,7 @@ class FirebaseService extends ChangeNotifier {
   String name;
   int roomNum;
   var chattingList = <ChatModel>[];
+  late Stream<List<String>> chatRoomsStream;
   late DocumentReference firebase =
       FirebaseFirestore.instance.collection('users').doc(id);
   FirebaseService({
@@ -31,14 +32,19 @@ class FirebaseService extends ChangeNotifier {
         .catchError((error) => print("Failed to add text : $error"));
   }
 
-  // 채팅방 생성
+  // 다음 채팅 방
   void CreateRoom() {
-    chattingList = <ChatModel>[];
     roomNum++;
+    load();
   }
 
   // 채팅방 삭제
-  void DelChatRoom() async {
+  void DelChatRoom(int roomNum) async {
+    await firebase.collection("ChatRoom$roomNum").get().then((snapshot) {
+      for (DocumentSnapshot doc in snapshot.docs) {
+        doc.reference.delete();
+      }
+    });
     await firebase.collection("ChatRoom$roomNum").doc().delete();
   }
 
@@ -67,11 +73,31 @@ class FirebaseService extends ChangeNotifier {
   }
 
   Future<int> roomCount() async {
-    late int count = 0;
+    late int count;
 
     // 서브컬렉션을 구하는 로직 필요!
+    count = await listenToChatRooms().length;
 
     print('방 개수: $count');
     return count;
+  }
+
+  Future<Object> RoomTitle(int roomNum) async {
+    CollectionReference r = firebase.collection('ChatRoom$roomNum');
+    final querySnapshot =
+        await r.orderBy('uploadTime', descending: false).limit(1).get();
+    String l;
+    if (querySnapshot.docs.isNotEmpty) {
+      // 데이터가 있을 경우
+      l = querySnapshot.docs.first.get('usertext');
+    } else {
+      // 데이터가 없을 경우
+      l = '대화가 없습니다.';
+    }
+    return l;
+  }
+
+  Stream<QuerySnapshot<Object?>> listenToChatRooms() {
+    return firebase.collection('ChatRoom$roomNum').snapshots();
   }
 }
