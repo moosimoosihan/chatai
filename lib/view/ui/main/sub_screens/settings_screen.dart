@@ -8,6 +8,9 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('세팅'),
+      ),
       body: Center(
         child: MaterialButton(
           color: Colors.yellow,
