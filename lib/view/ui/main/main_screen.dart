@@ -16,20 +16,17 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
+    return const DefaultTabController(
       length: 3,
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('AI chat App'),
-        ),
-        body: const TabBarView(
+        body: TabBarView(
           children: [
             Center(child: HomeScreen()),
             Center(child: ChatsScreen()),
             Center(child: SettingsScreen()),
           ],
         ),
-        bottomNavigationBar: const TabBar(
+        bottomNavigationBar: TabBar(
           tabs: [
             Tab(
               icon: Icon(Icons.home),

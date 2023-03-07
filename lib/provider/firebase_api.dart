@@ -7,10 +7,8 @@ class FirebaseService extends ChangeNotifier {
   String name;
   int roomNum;
   var chattingList = <ChatModel>[];
-  late CollectionReference firebase = FirebaseFirestore.instance
-      .collection('users')
-      .doc(id)
-      .collection('ChatRoom');
+  late DocumentReference firebase =
+      FirebaseFirestore.instance.collection('users').doc(id);
   FirebaseService({
     required this.id,
     required this.name,
@@ -21,26 +19,32 @@ class FirebaseService extends ChangeNotifier {
   Future SendMessage(String usertext, String aitext) async {
     var now = DateTime.now().millisecondsSinceEpoch;
     await firebase
+        .collection("ChatRoom$roomNum")
         .add(ChatModel(
           id,
           name,
           usertext,
           aitext,
           now,
-          roomNum,
         ).toJson())
         .then((value) => print("Text Added"))
         .catchError((error) => print("Failed to add text : $error"));
   }
 
+  // 채팅방 생성
+  void CreateRoom() {
+    chattingList = <ChatModel>[];
+    roomNum++;
+  }
+
   // 채팅방 삭제
   void DelChatRoom() async {
-    await firebase.doc().delete();
+    await firebase.collection("ChatRoom$roomNum").doc().delete();
   }
 
   Stream<QuerySnapshot> getSnapshot() {
     return firebase
-        .where('roomNum', isEqualTo: roomNum)
+        .collection("ChatRoom$roomNum")
         .orderBy('uploadTime', descending: true)
         .limit(1)
         .snapshots();
@@ -53,19 +57,21 @@ class FirebaseService extends ChangeNotifier {
 
   Future load() async {
     chattingList = <ChatModel>[];
-    var result = await firebase.orderBy('uploadTime', descending: true).get();
-    var l = result.docs
-        .map((e) => ChatModel.fromJson(e.data() as Map<String, dynamic>))
-        .toList();
+    var result = await firebase
+        .collection("ChatRoom$roomNum")
+        .orderBy('uploadTime', descending: true)
+        .get();
+    var l = result.docs.map((e) => ChatModel.fromJson(e.data())).toList();
     chattingList.addAll(l);
     notifyListeners();
   }
 
-  // ignore: non_constant_identifier_names
-  Future RoomCount() async {
-    int count = 0;
-    await firebase.get().then((snapshot) {
-      count = snapshot.docs.length;
-    });
+  Future<int> roomCount() async {
+    late int count = 0;
+
+    // 서브컬렉션을 구하는 로직 필요!
+
+    print('방 개수: $count');
+    return count;
   }
 }

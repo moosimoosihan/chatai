@@ -33,9 +33,6 @@ class _HomeScreenState extends State<HomeScreen> {
       p.addOne(
           ChatModel.fromJson(event.docs[0].data() as Map<String, dynamic>));
     });
-    Future.microtask(() {
-      p.load();
-    });
     super.initState();
   }
 
@@ -48,7 +45,25 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     var p = Provider.of<FirebaseService>(context);
+
+    Future.microtask(() {
+      p.load();
+    });
+
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('채팅'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              setState(() {
+                p.CreateRoom();
+              });
+            },
+            icon: const Icon(Icons.add),
+          ),
+        ],
+      ),
       body: Column(
         children: [
           Expanded(
