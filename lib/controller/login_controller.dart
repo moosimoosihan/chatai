@@ -1,8 +1,8 @@
-import 'package:chatai/repository/example_repository.dart';
+import 'package:chatai/repository/login_repository.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
-  final ExampleRepository repository;
+  final LoginRepository repository;
   LoginController({required this.repository});
 
   kakaoLogin(context) {
