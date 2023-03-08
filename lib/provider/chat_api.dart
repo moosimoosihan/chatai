@@ -2,7 +2,7 @@ import 'dart:convert';
 import '../model/chat_model.dart';
 import 'package:http/http.dart' as http;
 
-class ChatAPIService {
+class ChatAPI {
   Map<String, String> headers = {
     "Authorization": "하단 auth key 입력 후 테스트 가능",
     "Content-Type": "application/json"
