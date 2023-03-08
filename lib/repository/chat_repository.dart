@@ -5,5 +5,7 @@ class ChatRepository {
 
   ChatRepository({required this.apiClient});
 
-  getAnswer(String text) {}
+  getAnswer(String text) {
+    return apiClient.getChat(text);
+  }
 }

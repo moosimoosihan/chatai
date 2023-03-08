@@ -8,20 +8,16 @@ class ChatAPI {
     "Content-Type": "application/json"
   };
 
-  Future<ChatAIResponseModel> getChat(String chat) async {
+  getChat(String chat) async {
     final chatbody = jsonEncode(ChatAISendModel(chat).toJson());
     final url = Uri.parse('https://api.openai.com/v1/completions');
     final response = await http.post(url, body: chatbody, headers: headers);
     if (response.statusCode == 200) {
       final ChatAIResponseModel md =
           ChatAIResponseModel.fromJson(jsonDecode(response.body));
-      print(md.choices[0]);
       Choices cs = Choices.fromJson(md.choices[0]);
-      print(cs.text);
-      return md;
+      return cs.text;
     } else {
-      print(response.statusCode);
-      print(response.body);
       throw Error();
     }
   }
