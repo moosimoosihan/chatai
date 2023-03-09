@@ -13,12 +13,12 @@ class ChatsScreen extends StatefulWidget {
 }
 
 class ChatsScreenState extends State<ChatsScreen> {
-  late int maxRoomNum;
+  int maxRoomNum = 10;
 
   @override
-  void initState() {
+  void didChangeDependencies() {
     Provider.of<FirebaseService>(context, listen: false).listenToChatRooms();
-    super.initState();
+    super.didChangeDependencies();
   }
 
   @override
@@ -28,8 +28,7 @@ class ChatsScreenState extends State<ChatsScreen> {
       appBar: AppBar(
         title: const Text('채팅방'),
       ),
-      body: StreamBuilder<QuerySnapshot<Object?>>(
-        key: UniqueKey(),
+      body: StreamBuilder<DocumentSnapshot<Object?>>(
         stream: p.listenToChatRooms(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -37,9 +36,8 @@ class ChatsScreenState extends State<ChatsScreen> {
           } else if (snapshot.hasError) {
             return const Center(child: Text('로딩 실패'));
           } else {
-            var roomTitles = snapshot.data!.docs;
-            maxRoomNum = roomTitles.length;
             return ListView.builder(
+              key: UniqueKey(),
               itemCount: maxRoomNum,
               itemBuilder: (context, index) {
                 return Column(
@@ -51,32 +49,33 @@ class ChatsScreenState extends State<ChatsScreen> {
                         style: const TextStyle(fontSize: 17),
                       ),
                     ),
-                    Hero(
-                      tag: 'chathero',
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 5),
-                        padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-                        decoration: BoxDecoration(
-                            color: Colors.grey[700],
-                            borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(30),
-                                topRight: Radius.circular(30),
-                                bottomLeft: Radius.circular(30),
-                                bottomRight: Radius.circular(0))),
-                        child: ListTile(
-                          onTap: () {
-                            setState(() {
-                              p.roomNum = index;
-                            });
-                          },
-                          trailing: IconButton(
-                            icon: const Icon(Icons.delete),
-                            onPressed: () => p.DelChatRoom(index),
-                          ),
-                          title: Text(roomTitles[index].get('usertext'),
-                              style: const TextStyle(
-                                  color: Colors.white, fontSize: 18)),
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 5),
+                      padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                      decoration: BoxDecoration(
+                          color: p.roomNum == index
+                              ? Colors.grey[700]
+                              : Colors.blue[700],
+                          borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(30),
+                              topRight: Radius.circular(30),
+                              bottomLeft: Radius.circular(30),
+                              bottomRight: Radius.circular(0))),
+                      child: ListTile(
+                        onTap: () {
+                          setState(() {
+                            p.roomNum = index;
+                          });
+                          // 화면 전환 필요!
+                        },
+                        trailing: IconButton(
+                          icon: const Icon(Icons.delete),
+                          onPressed: () => p.DelChatRoom(index),
                         ),
+                        // 내용이 보이게 수정해야 함
+                        title: Text('채팅 내용 $index 번째',
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 18)),
                       ),
                     ),
                   ],

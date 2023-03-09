@@ -26,10 +26,10 @@ class _HomeScreenState extends State<HomeScreen> {
     sendController = TextEditingController();
     var p = Provider.of<FirebaseService>(context, listen: false);
     streamSubscription = p.getSnapshot().listen((event) {
-      // if (firstLoad) {
-      //   firstLoad = false;
-      //   return;
-      // }
+      if (firstLoad) {
+        firstLoad = false;
+        return;
+      }
 
       p.addOne(
           ChatModel.fromJson(event.docs[0].data() as Map<String, dynamic>));
