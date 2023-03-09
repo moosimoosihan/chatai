@@ -34,29 +34,24 @@ class ChattingItem extends StatelessWidget {
                       style: const TextStyle(fontSize: 17),
                     ),
                   ),
-                  Hero(
-                    tag: 'chathero',
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 5),
-                      padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-                      decoration: BoxDecoration(
-                          color: isMe ? Colors.grey[700] : Colors.grey[800],
-                          borderRadius: BorderRadius.only(
-                              topLeft: const Radius.circular(30),
-                              topRight: const Radius.circular(30),
-                              bottomLeft: Radius.circular(isMe ? 30 : 0),
-                              bottomRight: Radius.circular(isMe ? 0 : 30))),
-                      child: Column(
-                        children: [
-                          Text(
-                            isMe
-                                ? chattingModel.usertext
-                                : chattingModel.aitext,
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 18),
-                          ),
-                        ],
-                      ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 5),
+                    padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                    decoration: BoxDecoration(
+                        color: isMe ? Colors.grey[700] : Colors.grey[800],
+                        borderRadius: BorderRadius.only(
+                            topLeft: const Radius.circular(30),
+                            topRight: const Radius.circular(30),
+                            bottomLeft: Radius.circular(isMe ? 30 : 0),
+                            bottomRight: Radius.circular(isMe ? 0 : 30))),
+                    child: Column(
+                      children: [
+                        Text(
+                          isMe ? chattingModel.usertext : chattingModel.aitext,
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 18),
+                        ),
+                      ],
                     ),
                   )
                 ],

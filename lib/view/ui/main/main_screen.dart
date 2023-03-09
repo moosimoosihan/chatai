@@ -13,35 +13,48 @@ class MainScreen extends StatefulWidget {
   State<MainScreen> createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
+  int _currentIndex = 0;
+
+  final List<Widget> _screens = [
+    const HomeScreen(),
+    const ChatsScreen(),
+    const SettingsScreen(),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return const DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        body: TabBarView(
-          children: [
-            Center(child: HomeScreen()),
-            Center(child: ChatsScreen()),
-            Center(child: SettingsScreen()),
-          ],
+    return Scaffold(
+      body: TabBarView(
+        physics: const NeverScrollableScrollPhysics(),
+        controller: TabController(
+          length: _screens.length,
+          vsync: this,
+          initialIndex: _currentIndex,
         ),
-        bottomNavigationBar: TabBar(
-          tabs: [
-            Tab(
-              icon: Icon(Icons.home),
-              text: 'Chat',
-            ),
-            Tab(
-              icon: Icon(Icons.chat),
-              text: 'Chats',
-            ),
-            Tab(
-              icon: Icon(Icons.settings),
-              text: 'Settings',
-            )
-          ],
-        ),
+        children: _screens,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat),
+            label: 'Chats',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+          ),
+        ],
       ),
     );
   }

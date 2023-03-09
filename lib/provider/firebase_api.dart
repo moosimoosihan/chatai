@@ -34,8 +34,10 @@ class FirebaseService extends ChangeNotifier {
 
   // 다음 채팅 방
   void CreateRoom() {
-    roomNum++;
-    load();
+    if (roomNum != 9) {
+      roomNum++;
+      load();
+    }
   }
 
   // 채팅방 삭제
@@ -82,14 +84,18 @@ class FirebaseService extends ChangeNotifier {
     return count;
   }
 
-  Future<Object> RoomTitle(int roomNum) async {
-    CollectionReference r = firebase.collection('ChatRoom$roomNum');
-    final querySnapshot =
-        await r.orderBy('uploadTime', descending: false).limit(1).get();
+  Future<Object> RoomTitle(int index) async {
+    QuerySnapshot r = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(id)
+        .collection('ChatRoom$index')
+        .orderBy('uploadTime', descending: true)
+        .limit(1)
+        .get();
     String l;
-    if (querySnapshot.docs.isNotEmpty) {
+    if (r.docs.isNotEmpty) {
       // 데이터가 있을 경우
-      l = querySnapshot.docs.first.get('usertext');
+      l = r.docs.first.get('usertext');
     } else {
       // 데이터가 없을 경우
       l = '대화가 없습니다.';
@@ -97,7 +103,7 @@ class FirebaseService extends ChangeNotifier {
     return l;
   }
 
-  Stream<QuerySnapshot<Object?>> listenToChatRooms() {
-    return firebase.collection('ChatRoom$roomNum').snapshots();
+  Stream<DocumentSnapshot<Object?>> listenToChatRooms() {
+    return FirebaseFirestore.instance.collection('users').doc(id).snapshots();
   }
 }
