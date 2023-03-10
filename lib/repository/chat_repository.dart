@@ -1,7 +1,7 @@
 import '../provider/chat_api.dart';
 
 class ChatRepository {
-  final ChatAPI apiClient;
+  final ChatAPIService apiClient;
 
   ChatRepository({required this.apiClient});
 

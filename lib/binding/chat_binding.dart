@@ -7,7 +7,8 @@ class ChatBinding implements Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() {
-      return ChatController(repository: ChatRepository(apiClient: ChatAPI()));
+      return ChatController(
+          repository: ChatRepository(apiClient: ChatAPIService()));
     });
   }
 }

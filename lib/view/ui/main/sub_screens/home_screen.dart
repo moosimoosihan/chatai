@@ -48,7 +48,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(ChatController(repository: ChatRepository(apiClient: ChatAPI())));
+    Get.put(ChatController(
+        repository: ChatRepository(apiClient: ChatAPIService())));
     var p = Provider.of<FirebaseService>(context);
     Future.microtask(() {
       p.load();
