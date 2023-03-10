@@ -21,7 +21,7 @@ class FirebaseService extends ChangeNotifier {
     var now = DateTime.now().millisecondsSinceEpoch;
     await firebase
         .collection("ChatRoom$roomNum")
-        .add(ChatModel(id, name, usertext, aitext, now, roomNum).toJson())
+        .add(ChatModel(id, name, usertext, aitext, now).toJson())
         .then((value) => print("Text Added"))
         .catchError((error) => print("Failed to add text : $error"));
   }

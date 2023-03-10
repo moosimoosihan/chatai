@@ -1,5 +1,7 @@
+import 'package:chatai/view/ui/main/sub_screens/home_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../provider/firebase_api.dart';
@@ -67,7 +69,7 @@ class ChatsScreenState extends State<ChatsScreen> {
                           setState(() {
                             p.roomNum = index;
                           });
-                          // 화면 전환 필요!
+                          Get.to(() => const HomeScreen());
                         },
                         trailing: IconButton(
                           icon: const Icon(Icons.delete),
