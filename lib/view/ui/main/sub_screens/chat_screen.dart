@@ -1,7 +1,5 @@
-import 'package:chatai/view/ui/main/sub_screens/home_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../provider/firebase_api.dart';
@@ -66,10 +64,27 @@ class ChatsScreenState extends State<ChatsScreen> {
                               bottomRight: Radius.circular(0))),
                       child: ListTile(
                         onTap: () {
+                          // 화면 전환 필요!
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: ((context) => ChangeNotifierProvider(
+                                      create: (context) => FirebaseService(
+                                        id: p.id,
+                                        name: p.name,
+                                        roomNum: index,
+                                      ),
+                                      child: const MainScreen(),
+                                    ))),
+                          );
                           setState(() {
                             p.roomNum = index;
                           });
-                          Get.to(() => const HomeScreen());
+                          //Get.toNamed()
+                          // Navigator.of(context).push(
+                          //   MaterialPageRoute(
+                          //     builder: (context) => const HomeScreen(),
+                          //   ),
+                          // );
                         },
                         trailing: IconButton(
                           icon: const Icon(Icons.delete),
