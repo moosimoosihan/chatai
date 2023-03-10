@@ -7,10 +7,9 @@ class FirebaseService extends ChangeNotifier {
   String name;
   int roomNum;
   var chattingList = <ChatModel>[];
-  late CollectionReference firebase = FirebaseFirestore.instance
-      .collection('users')
-      .doc(id)
-      .collection('ChatRoom');
+  late Stream<List<String>> chatRoomsStream;
+  late DocumentReference firebase =
+      FirebaseFirestore.instance.collection('users').doc(id);
   FirebaseService({
     required this.id,
     required this.name,
@@ -22,14 +21,7 @@ class FirebaseService extends ChangeNotifier {
     var now = DateTime.now().millisecondsSinceEpoch;
     await firebase
         .collection("ChatRoom$roomNum")
-        .add(ChatModel(
-          id,
-          name,
-          usertext,
-          aitext,
-          now,
-          roomNum,
-        ).toJson())
+        .add(ChatModel(id, name, usertext, aitext, now, roomNum).toJson())
         .then((value) => print("Text Added"))
         .catchError((error) => print("Failed to add text : $error"));
   }
@@ -54,7 +46,7 @@ class FirebaseService extends ChangeNotifier {
 
   Stream<QuerySnapshot> getSnapshot() {
     return firebase
-        .where('roomNum', isEqualTo: roomNum)
+        .collection("ChatRoom$roomNum")
         .orderBy('uploadTime', descending: true)
         .limit(1)
         .snapshots();
@@ -76,11 +68,36 @@ class FirebaseService extends ChangeNotifier {
     notifyListeners();
   }
 
-  // ignore: non_constant_identifier_names
-  Future RoomCount() async {
-    int count = 0;
-    await firebase.get().then((snapshot) {
-      count = snapshot.docs.length;
-    });
+  Future<int> roomCount() async {
+    late int count;
+
+    // 서브컬렉션을 구하는 로직 필요!
+    count = await listenToChatRooms().length;
+
+    print('방 개수: $count');
+    return count;
+  }
+
+  Future<Object> RoomTitle(int index) async {
+    QuerySnapshot r = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(id)
+        .collection('ChatRoom$index')
+        .orderBy('uploadTime', descending: true)
+        .limit(1)
+        .get();
+    String l;
+    if (r.docs.isNotEmpty) {
+      // 데이터가 있을 경우
+      l = r.docs.first.get('usertext');
+    } else {
+      // 데이터가 없을 경우
+      l = '대화가 없습니다.';
+    }
+    return l;
+  }
+
+  Stream<DocumentSnapshot<Object?>> listenToChatRooms() {
+    return FirebaseFirestore.instance.collection('users').doc(id).snapshots();
   }
 }

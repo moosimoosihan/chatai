@@ -1,5 +1,4 @@
 class ChatModel {
-<<<<<<< HEAD
   ChatModel(
     this.id,
     this.name,
@@ -8,10 +7,6 @@ class ChatModel {
     this.uploadTime,
     this.roomNum,
   );
-=======
-  ChatModel(this.id, this.name, this.usertext, this.aitext, this.uploadTime,
-      this.roomNum);
->>>>>>> 1329c6d (add commit)
   final String id;
   final String name;
   final String usertext;
@@ -36,7 +31,6 @@ class ChatModel {
       'usertext': usertext,
       'aitext': aitext,
       'uploadTime': uploadTime,
-      'roomNum': roomNum,
       'roomNum': roomNum,
     };
   }
