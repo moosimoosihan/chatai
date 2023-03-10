@@ -36,11 +36,11 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    streamSubscription.cancel();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   streamSubscription.cancel();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {

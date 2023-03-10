@@ -71,7 +71,17 @@ class FirebaseService extends ChangeNotifier {
         .get();
     var l = result.docs.map((e) => ChatModel.fromJson(e.data())).toList();
     chattingList.addAll(l);
-    notifyListeners();
+    if (!disposed) {
+      notifyListeners();
+    }
+  }
+
+  bool disposed = false;
+
+  @override
+  void dispose() {
+    disposed = true;
+    super.dispose();
   }
 
   Future<int> roomCount() async {
