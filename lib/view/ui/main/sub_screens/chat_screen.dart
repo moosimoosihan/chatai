@@ -73,7 +73,6 @@ class ChatsScreenState extends State<ChatsScreen> {
                                         name: p.name,
                                         roomNum: index,
                                       ),
-                                      child: const MainScreen(),
                                     ))),
                           );
                           setState(() {
