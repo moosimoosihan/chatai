@@ -30,7 +30,6 @@ class _HomeScreenState extends State<HomeScreen> {
         firstLoad = false;
         return;
       }
-
       p.addOne(
           ChatModel.fromJson(event.docs[0].data() as Map<String, dynamic>));
     });
@@ -65,15 +64,19 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Column(
         children: [
-          Expanded(
-            child: ListView(
-              reverse: true,
-              children: p.chattingList
-                  .map((e) => ChattingItem(
-                        chattingModel: e,
-                      ))
-                  .toList(),
-            ),
+          Consumer<FirebaseService>(
+            builder: (context, p, _) {
+              return Expanded(
+                child: ListView(
+                  reverse: true,
+                  children: p.chattingList
+                      .map((e) => ChattingItem(
+                            chattingModel: e,
+                          ))
+                      .toList(),
+                ),
+              );
+            },
           ),
           // 구분선
           Divider(
